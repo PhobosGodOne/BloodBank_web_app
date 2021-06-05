@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+
+//mongoDB schema for donors
 const donorSchema = new mongoose.Schema({
 
     first_name:{ type : String , require : true},

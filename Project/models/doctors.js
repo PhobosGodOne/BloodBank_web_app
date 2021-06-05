@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+
+//mongoDB schema for doctors
 const doctorsSchema = new mongoose.Schema({
 
     email:{ type : String , require : true},

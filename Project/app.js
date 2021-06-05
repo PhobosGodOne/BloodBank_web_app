@@ -31,24 +31,16 @@ app.use(bodyParser.json())
 connectDB()
 
 //routes
-app.use('/',require('./routes/app'))
-app.use('/login',require('./routes/app'))
-app.use('/adddonor',require('./routes/app'))
-app.use('/editdonor',require('./routes/app'))
-app.use('/deletedonor',require('./routes/app'))
-app.use('/view',require('./routes/app'))
+app.use('/',require('./routes/index'))
+app.use('/login',require('./routes/index'))
+app.use('/adddonor',require('./routes/index'))
+app.use('/editdonor',require('./routes/index'))
+app.use('/deletedonor',require('./routes/index'))
+app.use('/view',require('./routes/index'))
 
 
+//Selecting port 8080 for google cloud
 const PORT = 8080
-
-/* doctor.create({
-    email : 'hhbelet@gmail.com',
-    password : '123456'Function failed on loading user code. This is likely due to a bug in the user code.
-
-}) */
-
-
-
 
 
 

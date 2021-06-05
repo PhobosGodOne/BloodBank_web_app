@@ -6,7 +6,7 @@ const doctor = require('../models/doctors')
 
 
 
-//route that uses different handleb. layout route
+//route that uses different handleb. layout 
 router.get('/login', (req, res) => {
 
     res.render('login', { layout: 'login.hbs' })
@@ -46,6 +46,7 @@ router.post('/adddonor/test', (req, res) => {
     res.render('adddonor', { alert: 'Donor Created Succesfully' })
 })
 
+//editing donor infos
 router.get('/editdonor/:id', (req, res) => {
 
     donor.findOne({ ID_number: req.params.id }).lean().then(donor => {
@@ -56,6 +57,7 @@ router.get('/editdonor/:id', (req, res) => {
 
 })
 
+// route to change donor infos
 router.post('/editdonor/edit/:idno', (req, res) => {
 
     const donorinfo = donor.findOne({
@@ -76,19 +78,20 @@ router.post('/editdonor/edit/:idno', (req, res) => {
 
 })
 
+//route that deletes donors from db
 router.get('/deletedonor/:id', (req, res) => {
 
 
 
     donor.deleteOne({ ID_number: req.params.id }, function (err) {
         if (err) return handleError(err);
-        // deleted at most one tank document
     });
 
     res.redirect('/donors')
 
 })
 
+//route for view selected donor's information
 router.get('/view/:id', (req, res) => {
 
     donor.findOne({ ID_number: req.params.id }).lean().then(donorv => {
@@ -99,6 +102,7 @@ router.get('/view/:id', (req, res) => {
     })
 })
 
+//route for login
 router.post('/login/try', (req, res) => {
 
 
