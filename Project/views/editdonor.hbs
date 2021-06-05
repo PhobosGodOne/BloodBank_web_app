@@ -1,0 +1,60 @@
+<div class="container ">
+    <form class="row g-3" action="/editdonor/edit/{{donor.ID_number}}" method="POST">
+        <div class="d-flex justify-content-center">
+            <h1>Edit Donor</h1>
+        </div>
+
+        <hr>
+
+        {{#if alert}}
+
+        <div class="container alert alert-success alert-dismissible fade show d-flex justify-content-center"
+            role="alert">
+            {{alert}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {{/if}}
+        <div class="col-md-6">
+            <label for="inputName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="inputName" name="first_name" value="{{donor.first_name}}">
+        </div>
+        <div class="col-md-6">
+            <label for="inputLastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="inputLastName" name="last_name" value="{{donor.last_name}}">
+        </div>
+        <div class="col-md-6">
+            <label for="IDnumber" class="form-label">ID Number</label>
+            <input type="text" class="form-control" id="IDnumber" name="ID_number" value="{{donor.ID_number}}">
+        </div>
+        <div class="col-md-6">
+            <label for="inputEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="inputEmail" name="email" value="{{donor.email}}">
+        </div>
+        <div class="col-md-6">
+            <label for="inputPhone" class="form-label">Phone</label>
+            <input type="text" class="form-control" id="inputPhone" name="phone" value="{{donor.phone}}">
+        </div>
+        <div class="col-md-6">
+            <label for="bloodGroup" class="form-label">Blood Group</label>
+            <input type="text" class="form-control" id="bloodGroup" placeholder="A+ / B-" name="blood_group"
+                value="{{donor.blood_group}}">
+        </div>
+        <div class="col-12">
+            <label for="inputAddress" class="form-label">Address</label>
+            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="adress"
+                value="{{donor.adress}}">
+        </div>
+        <div class="col-12">
+            <label for="floatingTextarea2" class="form-label">Information</label>
+            <textarea class="form-control" placeholder="Further to know" id="floatingTextarea2" style="height: 100px"
+                name="information">{{donor.information}}</textarea>
+        </div>
+
+        <div class="col-5 ">
+
+        </div>
+        <div class="col-7 ">
+            <button type="submit" class="btn btn-danger btn-lg">Edit Donor</button>
+        </div>
+    </form>
+</div>

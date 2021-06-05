@@ -1,0 +1,55 @@
+
+
+<div class="container" style="width: 75%;">
+
+    
+
+    
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            
+            <tr>
+                <th scope="col">ID Number</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col" class="text-center">Blood Group</th>
+                <th scope="col" class="text-center">Address</th>
+                <th scope="col" class="text-center">Information</th>
+
+
+
+            </tr>
+        </thead>
+        
+        <tbody>
+            
+            {{#with donorv}}
+            
+                <tr>
+                    <th scope="row">{{this.ID_number}}</th>
+                    <td>{{this.first_name}}</td>
+                    <td>{{this.last_name}}</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.phone}}</td>
+                    <td class="text-center">{{this.blood_group}}</td>
+                    <td>{{this.adress}}</td>
+                    <td class="text-center">{{this.information}}</td>
+
+                    
+
+                </tr>
+
+            {{/with}}
+            
+            
+        </tbody>
+        
+    </table>
+
+            
+
+    
+</div>
