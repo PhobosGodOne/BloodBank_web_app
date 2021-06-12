@@ -3,6 +3,15 @@ var bodyParser = require('body-parser')
 const router = express.Router()
 const donor = require('../models/donor')
 const doctor = require('../models/doctors')
+var session = require('express-session')
+
+const app = express()
+
+app.use(session({
+    secret: 'mysacrethome',
+    resave: false,
+    saveUninitialized: true
+}))
 
 
 
@@ -22,18 +31,37 @@ router.get('/', (req, res) => {
 
 //donors page rote
 router.get('/donors', (req, res) => {
-    donor.find({}).lean().then(donors => {
 
-        res.render('donors', { donors: donors })
 
-    })
+    if (req.session.name) {
 
+        donor.find({}).lean().then(donors => {
+
+            res.render('donors', { donors: donors })
+
+        })
+    }
+    else {
+        res.render('login', { layout: 'login.hbs', alert: 'Bu sayfaya erişmek için giriş yapmanız gereklidir.' })
+    }
 })
 
 //adddonor page route
 router.get('/adddonor', (req, res) => {
 
-    res.render('adddonor')
+
+    if (req.session.name) {
+
+        donor.find({}).lean().then(donors => {
+
+            res.render('adddonor')
+
+        })
+    }
+    else {
+        res.render('login', { layout: 'login.hbs', alert: 'Bu sayfaya erişmek için giriş yapmanız gereklidir.' })
+    }
+
 
 })
 
@@ -49,11 +77,26 @@ router.post('/adddonor/test', (req, res) => {
 //editing donor infos
 router.get('/editdonor/:id', (req, res) => {
 
-    donor.findOne({ ID_number: req.params.id }).lean().then(donor => {
-        res.render('editdonor', { donor, donor })
 
 
-    })
+    if (req.session.name) {
+
+        donor.find({}).lean().then(donors => {
+
+            donor.findOne({ ID_number: req.params.id }).lean().then(donor => {
+                res.render('editdonor', { donor, donor })
+
+
+            })
+
+        })
+    }
+    else {
+        res.render('login', { layout: 'login.hbs', alert: 'Bu sayfaya erişmek için giriş yapmanız gereklidir.' })
+    }
+
+
+
 
 })
 
@@ -83,23 +126,49 @@ router.get('/deletedonor/:id', (req, res) => {
 
 
 
-    donor.deleteOne({ ID_number: req.params.id }, function (err) {
-        if (err) return handleError(err);
-    });
 
-    res.redirect('/donors')
+
+    if (req.session.name) {
+
+        donor.find({}).lean().then(donors => {
+
+            donor.deleteOne({ ID_number: req.params.id }, function (err) {
+                if (err) return handleError(err);
+            });
+
+            res.redirect('/donors')
+
+        })
+    }
+    else {
+        res.render('login', { layout: 'login.hbs', alert: 'Bu sayfaya erişmek için giriş yapmanız gereklidir.' })
+    }
+
+
 
 })
 
 //route for view selected donor's information
 router.get('/view/:id', (req, res) => {
 
-    donor.findOne({ ID_number: req.params.id }).lean().then(donorv => {
-        console.log(donorv)
-        res.render('view', { donorv,donorv})
 
 
-    })
+    if (req.session.name) {
+
+        donor.find({}).lean().then(donors => {
+
+            donor.findOne({ ID_number: req.params.id }).lean().then(donorv => {
+
+                res.render('view', { donorv, donorv })
+
+
+            })
+
+        })
+    }
+    else {
+        res.render('login', { layout: 'login.hbs', alert: 'Bu sayfaya erişmek için giriş yapmanız gereklidir.' })
+    }
 })
 
 //route for login
@@ -108,16 +177,25 @@ router.post('/login/try', (req, res) => {
 
     doctor.findOne({ $and: [{ email: req.body.email }, { password: req.body.password }] }).lean().then(doctor => {
         if (doctor) {
+
+            req.session.name = req.body.email
             res.redirect('/donors')
 
         }
         else {
-            res.render('login',{ layout: 'login.hbs' ,alert: 'Doctor not found'})
+            res.render('login', { layout: 'login.hbs', alert: 'Doctor not found' })
         }
 
     })
 
 
+
+})
+
+router.get('/logout', (req, res) => {
+
+    req.session.destroy()
+    res.redirect('/login')
 
 })
 
